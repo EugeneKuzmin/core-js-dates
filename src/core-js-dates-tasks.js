@@ -179,8 +179,46 @@ function formatDate(date) {
  * 12, 2023 => 10
  * 1, 2024 => 8
  */
-function getCountWeekendsInMonth(/* month, year */) {
-  throw new Error('Not implemented');
+function getCountWeekendsInMonth(month, year) {
+  console.log('month', month);
+  console.log('year', year);
+  const firstDayOfWeek = new Date(year, month - 1, 1).getDay();
+  const daysInMonth = new Date(year, month, 0).getDate();
+  let daysInMonthForSat = 0;
+  let daysInMonthForSun = 0;
+  let numberOfSaturdays = 0;
+  let numberOfSundays = 0;
+  const daysInWeek = 7;
+  const maxNumberOfweeks = 4;
+  const daysBeforeSat = 7 - firstDayOfWeek;
+  let addWeekend = 0;
+  if (daysInMonth - daysInWeek * maxNumberOfweeks - daysBeforeSat >= 0) {
+    daysInMonthForSat = daysInMonth - daysBeforeSat;
+    addWeekend += 1;
+  } else {
+    daysInMonthForSat = daysInMonth;
+  }
+  console.log('daysInMonthForSat', daysInMonthForSat);
+
+  numberOfSaturdays = Math.floor(daysInMonthForSat / 7);
+
+  if (firstDayOfWeek === 0) {
+    daysInMonthForSun = daysInMonth - 1;
+    addWeekend += 1;
+  } else {
+    const daysBeforeSun = 8 - firstDayOfWeek;
+    daysInMonthForSun = daysInMonth - daysBeforeSun;
+  }
+
+  console.log('daysInMonthForSun', daysInMonthForSun);
+
+  numberOfSundays = Math.floor(daysInMonthForSun / 7);
+
+  console.log('firstDayOfWeek', firstDayOfWeek);
+  console.log('daysInMonth', daysInMonth);
+  console.log('numberOfSaturdays', numberOfSaturdays);
+  console.log('numberOfSundays', numberOfSundays);
+  return numberOfSaturdays + numberOfSundays + addWeekend;
 }
 
 /**
@@ -196,8 +234,26 @@ function getCountWeekendsInMonth(/* month, year */) {
  * Date(2024, 0, 31) => 5
  * Date(2024, 1, 23) => 8
  */
-function getWeekNumberByDate(/* date */) {
-  throw new Error('Not implemented');
+function getWeekNumberByDate(date) {
+  const paramDate = new Date(date);
+
+  const firstDayOfYear = new Date(new Date(paramDate.getFullYear(), 0, 0));
+
+  const firstWeekDayOfYear = firstDayOfYear.getDay();
+
+  let diffDays = Math.floor(
+    (paramDate - firstDayOfYear) / (1000 * 60 * 60 * 24)
+  );
+  let addWeeks = 0;
+
+  if (firstWeekDayOfYear !== 0) {
+    addWeeks += 1;
+    diffDays -= 7 - firstWeekDayOfYear;
+  }
+
+  const numberOfWeeks = Math.floor(diffDays / 7);
+  const dRemainder = Math.floor((diffDays + 7) % 7) > 0 ? 1 : 0;
+  return numberOfWeeks + dRemainder + addWeeks;
 }
 
 /**
@@ -226,8 +282,8 @@ function getNextFridayThe13th(/* date */) {
  * Date(2024, 5, 1) => 2
  * Date(2024, 10, 10) => 4
  */
-function getQuarter(/* date */) {
-  throw new Error('Not implemented');
+function getQuarter(date) {
+  return Math.ceil((new Date(date).getMonth() + 1) / 3);
 }
 
 /**
