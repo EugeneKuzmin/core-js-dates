@@ -180,8 +180,6 @@ function formatDate(date) {
  * 1, 2024 => 8
  */
 function getCountWeekendsInMonth(month, year) {
-  console.log('month', month);
-  console.log('year', year);
   const firstDayOfWeek = new Date(year, month - 1, 1).getDay();
   const daysInMonth = new Date(year, month, 0).getDate();
   let daysInMonthForSat = 0;
@@ -198,7 +196,6 @@ function getCountWeekendsInMonth(month, year) {
   } else {
     daysInMonthForSat = daysInMonth;
   }
-  console.log('daysInMonthForSat', daysInMonthForSat);
 
   numberOfSaturdays = Math.floor(daysInMonthForSat / 7);
 
@@ -210,14 +207,8 @@ function getCountWeekendsInMonth(month, year) {
     daysInMonthForSun = daysInMonth - daysBeforeSun;
   }
 
-  console.log('daysInMonthForSun', daysInMonthForSun);
-
   numberOfSundays = Math.floor(daysInMonthForSun / 7);
 
-  console.log('firstDayOfWeek', firstDayOfWeek);
-  console.log('daysInMonth', daysInMonth);
-  console.log('numberOfSaturdays', numberOfSaturdays);
-  console.log('numberOfSundays', numberOfSundays);
   return numberOfSaturdays + numberOfSundays + addWeekend;
 }
 
