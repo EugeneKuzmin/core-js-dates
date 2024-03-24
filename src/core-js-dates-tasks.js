@@ -179,38 +179,37 @@ function formatDate(date) {
  * 12, 2023 => 10
  * 1, 2024 => 8
  */
-function getCountWeekendsInMonth(/* month, year */) {
-  // const firstDayOfWeek = new Date(year, month - 1, 1).getDay();
-  // const daysInMonth = new Date(year, month, 0).getDate();
-  // let daysInMonthForSat = 0;
-  // let daysInMonthForSun = 0;
-  // let numberOfSaturdays = 0;
-  // let numberOfSundays = 0;
-  // const daysInWeek = 7;
-  // const maxNumberOfweeks = 4;
-  // const daysBeforeSat = 7 - firstDayOfWeek;
-  // let addWeekend = 0;
-  // if (daysInMonth - daysInWeek * maxNumberOfweeks - daysBeforeSat >= 0) {
-  //   daysInMonthForSat = daysInMonth - daysBeforeSat;
-  //   addWeekend += 1;
-  // } else {
-  //   daysInMonthForSat = daysInMonth;
-  // }
+function getCountWeekendsInMonth(month, year) {
+  const firstDayOfWeek = new Date(year, month - 1, 1).getDay();
+  let daysInMonth = 0;
+  if (month === 12) {
+    daysInMonth = new Date(year + 1, 0, 0).getDate();
+  } else {
+    daysInMonth = new Date(year, month, 0).getDate();
+  }
+  let daysInMonthForSat = 0;
+  let daysInMonthForSun = 0;
 
-  // numberOfSaturdays = Math.floor(daysInMonthForSat / 7);
+  let numberOfSaturdays = 0;
+  let numberOfSundays = 0;
 
-  // if (firstDayOfWeek === 0) {
-  //   daysInMonthForSun = daysInMonth - 1;
-  //   addWeekend += 1;
-  // } else {
-  //   const daysBeforeSun = 8 - firstDayOfWeek;
-  //   daysInMonthForSun = daysInMonth - daysBeforeSun;
-  // }
+  const daysBeforeSat = 7 - firstDayOfWeek;
 
-  // numberOfSundays = Math.floor(daysInMonthForSun / 7);
+  daysInMonthForSat = daysInMonth - daysBeforeSat;
 
-  // return numberOfSaturdays + numberOfSundays + addWeekend;
-  throw new Error('Not implemented');
+  numberOfSaturdays = Math.floor(daysInMonthForSat / 7);
+
+  if (firstDayOfWeek === 0) {
+    daysInMonthForSun = daysInMonth - 1;
+  } else {
+    const daysBeforeSun = 8 - firstDayOfWeek;
+    daysInMonthForSun = daysInMonth - daysBeforeSun;
+  }
+
+  numberOfSundays = Math.floor(daysInMonthForSun / 7);
+
+  const numberOfdays = numberOfSaturdays + numberOfSundays + 2;
+  return numberOfdays;
 }
 
 /**
