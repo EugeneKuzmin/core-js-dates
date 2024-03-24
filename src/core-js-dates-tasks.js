@@ -179,37 +179,38 @@ function formatDate(date) {
  * 12, 2023 => 10
  * 1, 2024 => 8
  */
-function getCountWeekendsInMonth(month, year) {
-  const firstDayOfWeek = new Date(year, month - 1, 1).getDay();
-  const daysInMonth = new Date(year, month, 0).getDate();
-  let daysInMonthForSat = 0;
-  let daysInMonthForSun = 0;
-  let numberOfSaturdays = 0;
-  let numberOfSundays = 0;
-  const daysInWeek = 7;
-  const maxNumberOfweeks = 4;
-  const daysBeforeSat = 7 - firstDayOfWeek;
-  let addWeekend = 0;
-  if (daysInMonth - daysInWeek * maxNumberOfweeks - daysBeforeSat >= 0) {
-    daysInMonthForSat = daysInMonth - daysBeforeSat;
-    addWeekend += 1;
-  } else {
-    daysInMonthForSat = daysInMonth;
-  }
+function getCountWeekendsInMonth(/* month, year */) {
+  // const firstDayOfWeek = new Date(year, month - 1, 1).getDay();
+  // const daysInMonth = new Date(year, month, 0).getDate();
+  // let daysInMonthForSat = 0;
+  // let daysInMonthForSun = 0;
+  // let numberOfSaturdays = 0;
+  // let numberOfSundays = 0;
+  // const daysInWeek = 7;
+  // const maxNumberOfweeks = 4;
+  // const daysBeforeSat = 7 - firstDayOfWeek;
+  // let addWeekend = 0;
+  // if (daysInMonth - daysInWeek * maxNumberOfweeks - daysBeforeSat >= 0) {
+  //   daysInMonthForSat = daysInMonth - daysBeforeSat;
+  //   addWeekend += 1;
+  // } else {
+  //   daysInMonthForSat = daysInMonth;
+  // }
 
-  numberOfSaturdays = Math.floor(daysInMonthForSat / 7);
+  // numberOfSaturdays = Math.floor(daysInMonthForSat / 7);
 
-  if (firstDayOfWeek === 0) {
-    daysInMonthForSun = daysInMonth - 1;
-    addWeekend += 1;
-  } else {
-    const daysBeforeSun = 8 - firstDayOfWeek;
-    daysInMonthForSun = daysInMonth - daysBeforeSun;
-  }
+  // if (firstDayOfWeek === 0) {
+  //   daysInMonthForSun = daysInMonth - 1;
+  //   addWeekend += 1;
+  // } else {
+  //   const daysBeforeSun = 8 - firstDayOfWeek;
+  //   daysInMonthForSun = daysInMonth - daysBeforeSun;
+  // }
 
-  numberOfSundays = Math.floor(daysInMonthForSun / 7);
+  // numberOfSundays = Math.floor(daysInMonthForSun / 7);
 
-  return numberOfSaturdays + numberOfSundays + addWeekend;
+  // return numberOfSaturdays + numberOfSundays + addWeekend;
+  throw new Error('Not implemented');
 }
 
 /**
@@ -258,8 +259,29 @@ function getWeekNumberByDate(date) {
  * Date(2024, 0, 13) => Date(2024, 8, 13)
  * Date(2023, 1, 1) => Date(2023, 9, 13)
  */
-function getNextFridayThe13th(/* date */) {
-  throw new Error('Not implemented');
+function getNextFridayThe13th(date) {
+  const parDate = new Date(date);
+  const currDay = parDate.getDate();
+  let currMonth = parDate.getMonth();
+  let currYear = parDate.getFullYear();
+  if (currDay > 13) {
+    if (currMonth > 11) {
+      currMonth = 0;
+      currYear += 1;
+    } else {
+      currMonth += 1;
+    }
+  }
+
+  while (new Date(currYear, currMonth, 13).getDay() !== 5) {
+    if (currMonth <= 11) {
+      currMonth += 1;
+    } else {
+      currMonth = 0;
+      currYear += 1;
+    }
+  }
+  return new Date(currYear, currMonth, 13);
 }
 
 /**
